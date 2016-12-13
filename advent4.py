@@ -37,7 +37,7 @@ def shift(c, n):
 
 
 
-for room in rooms:
+for room in list(rooms):
 	realchecksum = ""
 
 	encrypted = room[0:-11]
