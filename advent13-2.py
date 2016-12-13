@@ -1,4 +1,7 @@
 from collections import deque
+from time import time
+
+start_time = time()
 
 data = 1362
 position = (1, 1)
@@ -33,3 +36,4 @@ while distance <= 49:
 
 print(len(lessthan50))
 		
+print(time() - start_time)
