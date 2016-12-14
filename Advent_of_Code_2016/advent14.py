@@ -1,12 +1,14 @@
 import hashlib
 from time import time
+from collections import deque
 
 start_time = time()
 
 salt = "cuanljph"
 keys = []
 integer = 0
-hashes = []
+end = 1000
+hashes = deque()
 part2 = True
 found = False
 
@@ -17,6 +19,16 @@ def stretch(text):
 		text = hashstretch.hexdigest()
 	return text
 
+for i in range(0, end):
+	hashid = salt + str(i)
+	hash = hashlib.md5()
+	hash.update(hashid.encode("utf-8"))
+	test = hash.hexdigest()
+	if part2:
+		test = stretch(test)
+	hashes.append((test, i))
+
+
 
 while len(keys) < 64:
 	hashid = salt + str(integer)
@@ -25,39 +37,27 @@ while len(keys) < 64:
 	test = m.hexdigest()
 	if part2:
 		test = stretch(test)
+
+	hashid_2 = salt + str(end)
+	hash_2 = hashlib.md5()
+	hash_2.update(hashid_2.encode("utf-8"))
+	test_2 = hash_2.hexdigest()
+	if part2:
+		test_2 = stretch(test_2)
+
+	hashes.popleft()
+	hashes.append((test_2, end))
+
 	for i, c in enumerate(test):
 		if i + 3 <= len(test) and c * 3 in test[i:i+3]:
-			lasthash = integer
-			for hsh in list(hashes):
-				if hsh[1] <= integer :
-					hashes.remove(hsh)
-				else:
-					if c * 5 in hsh[0]:
-						print(integer)
-						keys.append(test)
-						print(len(keys))
-						found = True
-						break
-			if found:
-				found = False
-				break
-			if len(hashes) > 0:
-				lasthash = hashes[-1][1]
-			for n in range(lasthash + 1, integer + 1001):
-				newhashid = salt + str(n)
-				newhash = hashlib.md5()
-				newhash.update(newhashid.encode("utf-8"))
-				newtest = newhash.hexdigest()
-				if part2:
-					newtest = stretch(newtest)
-				hashes.append((newtest, n))
-				if c * 5 in newtest:
-					print(integer)
+			for hsh in hashes:
+				if c * 5 in hsh[0]:
 					keys.append(test)
-					print(len(keys))
 					break
 			break
 
 	integer += 1
+	end += 1
 
+print(integer - 1)
 print(time() - start_time)
