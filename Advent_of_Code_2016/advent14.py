@@ -26,7 +26,7 @@ for i in range(0, end):
 	test = hash.hexdigest()
 	if part2:
 		test = stretch(test)
-	hashes.append((test, i))
+	hashes.append(test)
 
 
 
@@ -46,12 +46,12 @@ while len(keys) < 64:
 		test_2 = stretch(test_2)
 
 	hashes.popleft()
-	hashes.append((test_2, end))
+	hashes.append(test_2)
 
 	for i, c in enumerate(test):
 		if i + 3 <= len(test) and c * 3 in test[i:i+3]:
 			for hsh in hashes:
-				if c * 5 in hsh[0]:
+				if c * 5 in hsh:
 					keys.append(test)
 					break
 			break
