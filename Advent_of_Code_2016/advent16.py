@@ -36,6 +36,4 @@ disk = disk[:35651584]
 
 checksum = check(disk)
 
-print(disk)
-print("---")
 print(checksum)
