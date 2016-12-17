@@ -1,5 +1,8 @@
+from time import clock
 from collections import deque
 import hashlib
+
+start_time = clock()
 
 data = "njfxhljp"
 frontier = deque()
@@ -10,14 +13,13 @@ frontier.append((data, pos))
 maxlen = 0
 
 def neighbors(node):
-	good = "bcdef"
 	doors = ["u", "d", "l", "r"]
 	m = hashlib.md5()
 	m.update(node.encode("utf-8"))
 	hsh = m.hexdigest()
 	unlocked = []
 	for i, c in enumerate(hsh[0:4]):
-		if c in good:
+		if c in "bcdef":
 			unlocked.append(doors[i])
 	return unlocked
 
@@ -26,6 +28,7 @@ while len(frontier) > 0:
 	if position == vault:
 		if not found:
 			print(working[8:])
+			print((clock() - start_time) * 1000)
 			found = True
 		if len(working[8:]) > maxlen:
 			maxlen = len(working[8:])
@@ -41,3 +44,4 @@ while len(frontier) > 0:
 			frontier.append((working + "R", (position[0] + 1, position[1])))
 
 print(maxlen)
+print((clock() - start_time) * 1000)
