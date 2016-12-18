@@ -3,6 +3,19 @@ from time import clock
 start_time = clock()
 data = "^^.^..^.....^..^..^^...^^.^....^^^.^.^^....^.^^^...^^^^.^^^^.^..^^^^.^^.^.^.^.^.^^...^^..^^^..^.^^^^"
 
+def isTrap(last, index):
+	if index < 1:
+		if last[index + 1] == "^":
+			return True
+	elif index > len(last) - 2:
+		if last[index - 1] == "^":
+			return True
+	else:
+		if last[index - 1] != last[index + 1]:
+			return True
+	return False
+
+
 def traps(floor, n):
 	rows = [floor]
 	safe = 0
@@ -10,21 +23,10 @@ def traps(floor, n):
 	for i in range(n - 1):
 		current = ""
 		for j in range(len(floor)):
-			if j < 1:
-				if rows[i][j + 1] == "^":
-					current += "^"
-				else:
-					current += "."
-			elif j > len(floor) - 2:
-				if rows[i][j - 1] == "^":
-					current += "^"
-				else:
-					current += "."
+			if isTrap(rows[i], j):
+				current += "^"
 			else:
-				if rows[i][j - 1] != rows[i][j + 1]:
-					current += "^"
-				else:
-					current += "."
+				current += "."
 		rows.append(current)
 
 	for i in rows:
