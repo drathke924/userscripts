@@ -39,4 +39,5 @@ for i in range(1, data + 1):
 	else:
 		working += 2
 
+print("Part two")
 print(working)
