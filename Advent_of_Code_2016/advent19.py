@@ -2,10 +2,9 @@ import math
 
 data = 3017957
 
-binary = list(bin(data)[2:])
-binary.append(binary.pop(0))
+binary = bin(data)[3:] + bin(data)[2]
 print("Part one")
-print(int("".join(binary), 2))
+print(int(binary, 2))
 
 
 
