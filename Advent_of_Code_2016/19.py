@@ -1,6 +1,6 @@
 import math 
 
-data = 3017957
+data = 3018458
 
 binary = bin(data)[3:] + bin(data)[2]
 print("Part one")

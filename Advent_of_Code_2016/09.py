@@ -27,8 +27,6 @@ def partTwo(string):
 			total += partTwo(string[seekend+1: seekend+instruct[0]+1]) * instruct[1]
 			seek = seekend + instruct[0]
 		else:
-			with open("advent9out.txt", "a") as f:
-				f.write(string[seek])
 			total += 1
 		seek += 1
 	return total

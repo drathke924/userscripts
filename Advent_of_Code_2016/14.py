@@ -9,7 +9,7 @@ keys = []
 integer = 0
 end = 1000
 hashes = deque()
-part2 = True
+part2 = False
 found = False
 
 def stretch(text):

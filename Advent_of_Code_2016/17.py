@@ -4,7 +4,7 @@ import hashlib
 
 start_time = clock()
 
-data = "njfxhljp"
+data = "pxxbnzuo"
 frontier = deque()
 pos = (0, 0)
 vault = (3, 3)

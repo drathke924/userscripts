@@ -1,7 +1,7 @@
 from time import clock
 
 start_time = clock()
-data = "^^.^..^.....^..^..^^...^^.^....^^^.^.^^....^.^^^...^^^^.^^^^.^..^^^^.^^.^.^.^.^.^^...^^..^^^..^.^^^^"
+data = "^^^^......^...^..^....^^^.^^^.^.^^^^^^..^...^^...^^^.^^....^..^^^.^.^^...^.^...^^.^^^.^^^^.^^.^..^.^"
 
 def isTrap(last, index):
 	if index < 1:
@@ -39,5 +39,5 @@ print(traps(data, 40))
 print(clock() - start_time)
 
 lap_time = clock()
-print(traps(data, 399999))
+print(traps(data, 400000))
 print(clock() - lap_time)
