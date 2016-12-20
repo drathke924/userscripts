@@ -2,7 +2,7 @@
 
 secsum = 0
 
-file = open("advent4.txt", 'r')
+file = open("04.txt", 'r')
 rooms = file.read().splitlines()
 file.close() 
 

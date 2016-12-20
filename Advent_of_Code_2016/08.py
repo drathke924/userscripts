@@ -26,7 +26,7 @@ for i in range(0, 6):
 	for j in range(0, 50):
 		display[i].append("_")
 
-with open ("advent8.txt", 'r') as f:
+with open ("08.txt", 'r') as f:
 	data = f.read().splitlines()
 		
 for line in data:

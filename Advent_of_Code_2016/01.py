@@ -3,7 +3,7 @@ location = [0, 0]
 visited = []
 solved = False
 
-file = open('advent1.txt', 'r')
+file = open('01.txt', 'r')
 
 instructions = file.read().split()
 

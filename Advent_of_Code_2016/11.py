@@ -4,7 +4,7 @@ import copy
 start_time = time.time()
 
 steps = 1
-start_floors = [["SG", "SM", "PG", "PM"], ["TG", "RG", "RM", "CG", "CM"], ["TM"], []]
+start_floors = [["OG", "TG", "TM", "PG", "RG", "RM", "CG", "CM"], ["OM", "PM"], [], []]
 start_elevator = 0
 moves = []
 seen = []

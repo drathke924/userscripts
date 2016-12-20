@@ -3,7 +3,7 @@ output = {}
 specialbot = 0
 changed = True
 
-with open("advent10.txt", "r") as f:
+with open("10.txt", "r") as f:
 	data = f.read().splitlines()
 
 # Starts by running through the instructions handing out free chips

@@ -5,7 +5,7 @@ start_time = time()
 reg = {"a" : 0, "b" : 0, "c" : 0, "d" : 0}
 i = 0
 
-with open("advent12.txt", "r") as f:
+with open("12.txt", "r") as f:
 	data = f.read().splitlines()
 
 while i < len(data):
