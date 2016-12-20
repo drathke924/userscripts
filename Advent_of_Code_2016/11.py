@@ -3,13 +3,9 @@ import copy
 
 start_time = time.time()
 
-steps = 1
+
 start_floors = [["OG", "TG", "TM", "PG", "RG", "RM", "CG", "CM"], ["OM", "PM"], [], []]
-start_elevator = 0
-moves = []
-seen = []
-checked = []
-found = False
+
 
 def check_valid(dest, pt1, pt2, validfloors, validelevator):
 	testdest = list(validfloors[dest])
@@ -41,8 +37,7 @@ def check_valid(dest, pt1, pt2, validfloors, validelevator):
 
 
 
-def do_move(destination, part1, part2, infloors, inelevator):
-	global steps
+def do_move(destination, part1, part2, infloors, inelevator, steps):
 	movefloors = copy.deepcopy(infloors)
 	moveelevator = int(inelevator)
 	valid = check_valid(destination, part1, part2, movefloors, moveelevator)
@@ -72,59 +67,72 @@ def do_move(destination, part1, part2, infloors, inelevator):
 	return [movefloors, moveelevator, state, steps]
 
 
-
-for i in start_floors[start_elevator]:
-	test = do_move(1, i, "", start_floors, start_elevator)
-	if test != False and test[2] not in seen:
-		moves.append(test)
-		seen.append(test[2])
-	for j in start_floors[start_elevator]:
-		if i != j:
-			test = do_move(1, i, j, start_floors, start_elevator)
-			if test != False and test[2] not in seen:
-				moves.append(test)
-				seen.append(test[2])
-
-while not found:
-	steps += 1
-	print(len(moves))
-	for i in copy.deepcopy(moves):
-		moves.remove(i)
-		if len(i[0][3]) == 10:
-			print(i)
-			found = True
-			break
-		floors = i[0]
-		elevator = i[1]
-		testfloors = copy.deepcopy(floors)
-		testelevator = int(elevator)
-		for p1 in testfloors[testelevator]:
-			for p2 in testfloors[testelevator]:
-				if p1 != p2:
-					if testelevator < 3:
-						test = do_move(testelevator + 1, p1, p2, testfloors, testelevator)
-						if test != False and test[2] not in seen:
-							moves.append(test)
-							seen.append(test[2])
-			if testelevator < 3:
-				test = do_move(testelevator + 1, p1, "", testfloors, testelevator)
+def findPath(start_floors, amount):
+	steps = 1
+	start_elevator = 0
+	moves = []
+	seen = []
+	checked = []
+	found = False
+	for i in start_floors[start_elevator]:
+		test = do_move(1, i, "", start_floors, start_elevator, steps)
+		if test != False and test[2] not in seen:
+			moves.append(test)
+			seen.append(test[2])
+		for j in start_floors[start_elevator]:
+			if i != j:
+				test = do_move(1, i, j, start_floors, start_elevator, steps)
 				if test != False and test[2] not in seen:
 					moves.append(test)
 					seen.append(test[2])
+
+	while not found:
+		steps += 1
+		for i in copy.deepcopy(moves):
+			moves.remove(i)
+			if len(i[0][3]) == amount:
+				return i[3]
+			floors = i[0]
+			elevator = i[1]
 			testfloors = copy.deepcopy(floors)
-			if elevator > 1 and all(testfloors[x] == [] for x in range(1, elevator)):
-				continue
-			if testelevator > 0:
-				test = do_move(testelevator - 1, p1, "", testfloors, testelevator)
-				if test != False and test[2] not in seen:
-					moves.append(test)
-					seen.append(test[2])
-			for p2 in testfloors[testelevator]:
-				if p1[0] != p2[0]:
-					if testelevator > 0:
-						test = do_move(testelevator - 1, p1, p2, testfloors, testelevator)
-						if test != False and test[2] not in seen:
-							moves.append(test)
-							seen.append(test[2])
+			testelevator = int(elevator)
+			for p1 in testfloors[testelevator]:
+				for p2 in testfloors[testelevator]:
+					if p1 != p2:
+						if testelevator < 3:
+							test = do_move(testelevator + 1, p1, p2, testfloors, testelevator, steps)
+							if test != False and test[2] not in seen:
+								moves.append(test)
+								seen.append(test[2])
+				if testelevator < 3:
+					test = do_move(testelevator + 1, p1, "", testfloors, testelevator, steps)
+					if test != False and test[2] not in seen:
+						moves.append(test)
+						seen.append(test[2])
+				testfloors = copy.deepcopy(floors)
+				if elevator > 1 and all(testfloors[x] == [] for x in range(1, elevator)):
+					continue
+				if testelevator > 0:
+					test = do_move(testelevator - 1, p1, "", testfloors, testelevator, steps)
+					if test != False and test[2] not in seen:
+						moves.append(test)
+						seen.append(test[2])
+				for p2 in testfloors[testelevator]:
+					if p1[0] != p2[0]:
+						if testelevator > 0:
+							test = do_move(testelevator - 1, p1, p2, testfloors, testelevator, steps)
+							if test != False and test[2] not in seen:
+								moves.append(test)
+								seen.append(test[2])
 
+
+
+floors = [["OG", "TG", "TM", "PG", "RG", "RM", "CG", "CM"], ["OM", "PM"], [], []]
+print(findPath(floors, 10))
+print("Run time: %s" % (time.time() - start_time))
+
+
+start_time = time.time()
+floors = [["EG", "EM", "DG", "DM", "OG", "TG", "TM", "PG", "RG", "RM", "CG", "CM"], ["OM", "PM"], [], []]
+print(findPath(floors, 14))
 print("Run time: %s" % (time.time() - start_time))

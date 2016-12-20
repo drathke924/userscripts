@@ -4,7 +4,7 @@ from collections import deque
 
 start_time = time()
 
-salt = "cuanljph"
+salt = "zpqevtbw"
 keys = []
 integer = 0
 end = 1000
