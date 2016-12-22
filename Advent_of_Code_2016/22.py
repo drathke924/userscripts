@@ -8,6 +8,7 @@ moved = set()
 wall = set()
 datanode = start_node
 maze = []
+modifier = 0
 
 with open("22.txt", "r") as f:
 	data = f.read().splitlines()
@@ -39,7 +40,7 @@ def partOne(nods):
 			pairs.add((i[0], i[1]))
 	return pairs
 
-def partTwo(start, goal):
+def partTwo(start, goal, mod):
 	global nodes
 	global wall
 	goToStart = True
@@ -57,7 +58,7 @@ def partTwo(start, goal):
 				idist = abs(i[0] - start[0]) + abs(i[1] - start[1])
 			else:
 				idist = abs(i[0] - goal[0]) + abs(i[1] - goal[1])
-			if i not in wall and idist <= dist + 1 and i not in visited:
+			if i not in wall and idist <= dist + mod and i not in visited:
 				visited.add(i)
 				if i == start and goToStart:
 					goToStart = False
@@ -92,5 +93,7 @@ for i in maze:
 '''
 
 print(len(partOne(nodes)))
-print(partTwo(start_node, goal_node))
+while partTwo(start_node, goal_node, modifier) == None:
+	modifier += 1
+print(partTwo(start_node, goal_node, modifier))
 
