@@ -58,13 +58,7 @@ def findPOI(start, POI):
 							foundPairs[tuple(map(str, sorted([sym, POI])))] = dist + 1
 					frontier.append((node, dist + 1))
 					visited.add(node)
-					
 
-						
-
-
-	
-	
 for i in POIs:
 	findPOI(i[1], i[0])
 
