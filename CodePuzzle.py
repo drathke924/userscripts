@@ -40,3 +40,13 @@ newSmallDeckOrder.revealDeck()
 print("Draw until empty")
 while len(newSmallDeckOrder.cards) > 0:
 	print(newSmallDeckOrder.drawCard())
+
+oddSmallDeck = Deck([Card("spades", "ace"), Card("clubs", "ace"), Card("hearts", "ace"), Card("diamond", "ace"), Card("spades", "2"), Card("clubs", "2"), Card("hearts", "2"), Card("diamonds", "2"), Card("spades", 3)])
+print("Initial state")
+oddSmallDeck.revealDeck()
+oddSmallDeck.shuffleDeck()
+print("Shuffled once")
+oddSmallDeck.revealDeck()
+print("Draw until empty")
+while len(oddSmallDeck.cards) > 0:
+	print(oddSmallDeck.drawCard())
