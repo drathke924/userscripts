@@ -2,6 +2,7 @@ with open("day8data.txt" , "r") as f:
 	data = f.read().splitlines()
 
 allRegisters = {}
+highest = -99999
 
 def comparison(regi, amnt, cmpr):
 	if compare == ">":
@@ -39,12 +40,14 @@ for l in data:
 		allRegisters[register]
 	except KeyError:
 		allRegisters[register] = 0
-	#try:
+	try:
+		allRegisters[testreg]
+	except KeyError:
+		allRegisters[testreg] = 0
 	if comparison(allRegisters[testreg], compamnt, compare):
 		allRegisters[register] += incdec(instruct, amount)
-	#except KeyError:
-	#	allRegisters[testreg] = 0
+	highest = max([highest, max(allRegisters.values())])
 
 
-print(allRegisters.keys())
 print(max(allRegisters.values()))
+print(highest)
