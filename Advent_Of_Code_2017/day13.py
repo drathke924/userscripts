@@ -11,7 +11,6 @@ wait = 0
 
 for x in data:
 	if x[0] % ((x[1] - 1)*2) == 0:
-		print(x)
 		severity += x[0] * x[1]
 		
 print(severity)
@@ -21,6 +20,7 @@ while not safe:
 	for x in data:
 		if x[0] + wait >= ((x[1] - 1)*2) and (x[0] + wait) % ((x[1] - 1)*2) == 0:
 			caught = True
+			break
 	if not caught:
 		safe = True
 	else:
