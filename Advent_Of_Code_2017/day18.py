@@ -1,22 +1,19 @@
 with open("day18data.txt", "r") as f:
-	data = f.read().splitlines()
+	DATA = f.read().splitlines()
 
-data = list(map(lambda x: x.split(" "), data))
+DATA = list(map(lambda x: x.split(" "), DATA))
+def get(instr):
+	
 
-def partone(datain):
-	regset = {}
+
+def partone():
+	global DATA
+	regset = {"a": 0, "b": 0, "c": 0, "i": 0, "p": 0}
 	step = 0
 	lastsound = 0
 	while True:
-		instruct = list(datain[step])
-		if instruct[1] not in regset:
-			regset[instruct[1]] = 0
-		try:
-			instruct[2] = int(instruct[2])
-		except ValueError:
-			instruct[2] = regset[instruct[2]]
-		except IndexError:
-			pass
+		instruct = list(DATA[step])
+
 		if instruct[0] == "set":
 			regset[instruct[1]] = instruct[2]
 		elif instruct[0] == "add":
@@ -48,10 +45,12 @@ def partone(datain):
 				continue
 		step += 1
 
-def process(datain):
-	return datain
+def process():
+	global DATA
+	return 0
 
 def parttwo():
+	global DATA
 	regone = {'p': 0}
 	regtwo = {'p': 1}
 	stackone = []
@@ -59,17 +58,8 @@ def parttwo():
 	stepone = 0
 	steptwo = 0
 	sendcount = 0
-	changed = True
-	test = 0
-	while changed:
-		regone, stepone, stackone, tempcount = process(regone, stepone, stackone, stacktwo)
-		regtwo, steptwo, stacktwo, ignore = process(regtwo, steptwo, stacktwo, stackone)
-		if tempcount + ignore != test:
-			test = tempcount + ignore
-			sendcount += tempcount
-		else:
-			changed = False
+
 	return(sendcount)
 
-print(partone(data))
+print(partone())
 print(parttwo())
