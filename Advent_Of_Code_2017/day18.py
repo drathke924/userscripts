@@ -2,8 +2,12 @@ with open("day18data.txt", "r") as f:
 	DATA = f.read().splitlines()
 
 DATA = list(map(lambda x: x.split(" "), DATA))
-def get(instr):
-	
+
+def get(instr, reg):
+	try:
+		return int(instr)
+	except ValueError:
+		return reg[instr]
 
 
 def partone():
@@ -13,40 +17,31 @@ def partone():
 	lastsound = 0
 	while True:
 		instruct = list(DATA[step])
-
 		if instruct[0] == "set":
-			regset[instruct[1]] = instruct[2]
+			regset[instruct[1]] = get(instruct[2], regset)
 		elif instruct[0] == "add":
-			regset[instruct[1]] += instruct[2]
+			regset[instruct[1]] += get(instruct[2], regset)
 		elif instruct[0] == "mul":
-			regset[instruct[1]] *= instruct[2]
+			regset[instruct[1]] *= get(instruct[2], regset)
 		elif instruct[0] == "mod":
-			regset[instruct[1]] = regset[instruct[1]] % instruct[2]
+			regset[instruct[1]] = regset[instruct[1]] % get(instruct[2], regset)
 		elif instruct[0] == "snd":
-			try:
-				instruct[1] = int(instruct[1])
-			except ValueError:
-				instruct[1] = regset[instruct[1]]
+			instruct[1] = get(instruct[1], regset)
 			lastsound = instruct[1]
 		elif instruct[0] == "rcv":
-			try:
-				instruct[1] = int(instruct[1])
-			except ValueError:
-				instruct[1] = regset[instruct[1]]
-			if instruct[1] > 0:
+			get(instruct[1], regset)
+			if get(instruct[1], regset) > 0:
 				return lastsound
 		elif instruct[0] == "jgz":
-			try:
-				instruct[1] = int(instruct[1])
-			except ValueError:
-				instruct[1] = regset[instruct[1]]
-			if instruct[1] > 0:
-				step += instruct[2]
+			get(instruct[1], regset)
+			if get(instruct[1], regset) > 0:
+				step += get(instruct[2], regset)
 				continue
 		step += 1
 
-def process():
+def process(step):
 	global DATA
+
 	return 0
 
 def parttwo():
