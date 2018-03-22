@@ -35,16 +35,12 @@ def partone():
 			if get(instruct[1], regset) > 0:
 				return lastsound
 		elif instruct[0] == "jgz":
-			get(instruct[1], regset)
+			if instruct[1] == "1":
+				print(get(instruct[1], regset))
 			if get(instruct[1], regset) > 0:
 				step += get(instruct[2], regset)
 				continue
 		step += 1
-
-def process(step):
-	global DATA
-
-	return 0
 
 def parttwo():
 	global DATA
@@ -59,6 +55,7 @@ def parttwo():
 		workstack = list(stack[currentproc])
 		otherstack = list(stack[1 - currentproc])
 		while True:
+			#print(workstep)
 			instruct = list(DATA[workstep])
 			#print(str(instruct) + " : " + str(currentproc) + " : " + str(step) + " : " + str(workstep) + " : " + str(stack) + " : " + str(sendcount))
 			if instruct[0] == "set":
@@ -78,10 +75,9 @@ def parttwo():
 				if workstack == []:
 					waiting[currentproc] = True
 					currentproc = 1 - currentproc
-					print("----------------------------")
 					break
 				else:
-					workstack.pop(-1)
+					regset[currentproc][instruct[1]] = workstack.pop(-1)
 			elif instruct[0] == "jgz":
 				get(instruct[1], regset[currentproc])
 				if get(instruct[1], regset[currentproc]) > 0:
@@ -89,7 +85,9 @@ def parttwo():
 					continue
 			workstep += 1
 		step[1 - currentproc] = int(workstep)
+		print(step)
 		stack[currentproc] = list(otherstack)
+		stack[1 - currentproc] = list(workstack)
 	return(sendcount)
 
 print(partone())
