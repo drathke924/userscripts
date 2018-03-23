@@ -1,4 +1,5 @@
 from functools import reduce
+import os
 
 with open("day18data.txt", "r") as f:
 	DATA = f.read().splitlines()
@@ -50,14 +51,11 @@ def parttwo():
 	waiting = [False, False]
 	sendcount = 0
 	currentproc = 0
-	while reduce(lambda x, y: x+y, waiting) != 2:
-		workstep = int(step[currentproc])
-		workstack = list(stack[currentproc])
-		otherstack = list(stack[1 - currentproc])
+	while waiting[0] == False or waiting[1] == False:
 		while True:
-			#print(workstep)
-			instruct = list(DATA[workstep])
-			#print(str(instruct) + " : " + str(currentproc) + " : " + str(step) + " : " + str(workstep) + " : " + str(stack) + " : " + str(sendcount))
+			#print(step[currentproc])
+			instruct = list(DATA[step[currentproc]])
+			#print(str(instruct) + " : " + str(currentproc) + " : " + str(step) + " : " + str(step[currentproc]) + " : " + str(stack) + " : " + str(sendcount))
 			if instruct[0] == "set":
 				regset[currentproc][instruct[1]] = get(instruct[2], regset[currentproc])
 			elif instruct[0] == "add":
@@ -68,26 +66,21 @@ def parttwo():
 				regset[currentproc][instruct[1]] = regset[currentproc][instruct[1]] % get(instruct[2], regset[currentproc])
 			elif instruct[0] == "snd":
 				waiting[1 - currentproc] = False
-				otherstack.append(get(instruct[1], regset[currentproc]))
+				stack[1 - currentproc].append(get(instruct[1], regset[currentproc]))
 				if currentproc == 1:
 					sendcount += 1
 			elif instruct[0] == "rcv":
-				if workstack == []:
+				if stack[currentproc] == []:
 					waiting[currentproc] = True
 					currentproc = 1 - currentproc
 					break
 				else:
-					regset[currentproc][instruct[1]] = workstack.pop(-1)
+					regset[currentproc][instruct[1]] = stack[currentproc].pop(0)
 			elif instruct[0] == "jgz":
-				get(instruct[1], regset[currentproc])
 				if get(instruct[1], regset[currentproc]) > 0:
-					workstep += get(instruct[2], regset[currentproc])
+					step[currentproc] += get(instruct[2], regset[currentproc])
 					continue
-			workstep += 1
-		step[1 - currentproc] = int(workstep)
-		print(step)
-		stack[currentproc] = list(otherstack)
-		stack[1 - currentproc] = list(workstack)
+			step[currentproc] += 1
 	return(sendcount)
 
 print(partone())
