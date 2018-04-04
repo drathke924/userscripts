@@ -4,10 +4,10 @@ with open("day21test.txt", "r") as f:
 for i in range(len(DATA)):
     DATA[i] = DATA[i].split(" ")
 
-DATADICT = {}
+RULEDICT = {}
 
 for l in DATA:
-    DATADICT[l[0]] = l[2]
+    RULEDICT[l[0]] = l[2]
 
 
 
@@ -23,11 +23,11 @@ def vFlip(inp):
     return "/".join(inp.split("/")[::-1])
 
 def check(inp):
-    global DATA
+    global RULEDICT
     doH = True
     while True:
-        if inp in DATADICT.keys():
-            return DATADICT[inp]
+        if inp in RULEDICT.keys():
+            return RULEDICT[inp]
         elif doH:
             inp = hFlip(inp)
             doH = False
@@ -35,5 +35,41 @@ def check(inp):
             inp = vFlip(inp)
             doH = True
 
-print(check(start))
-#for i in range(2):
+
+def div(inp):
+    out = []
+    size = len(inp.split("/")[0])
+    if size == 2 or size == 3:
+        return [inp]
+    elif size % 2 == 0:
+        temp = inp.split("/")
+        for i in range(0, size, 2):
+            for j in range(0, size, 2):
+                smalltemp = []
+                for k in range(2):
+                    smalltemp.append(temp[i + k][j:j+2])
+                out.append("/".join(smalltemp))
+        return out
+    elif size % 3 == 0:
+        temp = inp.split("/")
+        for i in range(0, size, 3):
+            for j in range(0, size, 3):
+                smalltemp = []
+                for k in range(3):
+                    smalltemp.append(temp[i + j + k][j:j+3])
+                out.append("/".join(smalltemp))
+        temp = []
+        for s in out:
+
+        return out
+
+output = div(start)
+print(output)
+for i in range(2):
+    for j in range(len(output)):
+        print(check(output[j]))
+        output[j] = check(output[j])
+    print(output)
+    output = div("/".join(output))
+
+print(output)
