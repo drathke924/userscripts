@@ -1,3 +1,5 @@
+from math import sqrt
+
 with open("day21test.txt", "r") as f:
     DATA = f.read().splitlines()
 
@@ -12,6 +14,7 @@ for l in DATA:
 
 
 start = ".#./..#/###"
+#start = "#..#/..../#..#/.##."
 
 def hFlip(inp):
     out = []
@@ -58,18 +61,33 @@ def div(inp):
                 for k in range(3):
                     smalltemp.append(temp[i + j + k][j:j+3])
                 out.append("/".join(smalltemp))
-        temp = []
-        for s in out:
-
         return out
 
+def linejoin(inp):
+    out = []
+    size = sqrt(len(inp))
+    if size > 1:
+        for i in range(len(inp)):
+            inp[i] = inp[i].split("/")
+        for i in range(size):
+            for j in range(size):
+                insize = len(inp[j + (i*2)])
+                for k in range(insize):
+                    
+
+    out = list(inp)
+    print(out)
+    return "/".join(out)
+
+
+
 output = div(start)
-print(output)
+#print(output)
+#print(linejoin(output))
 for i in range(2):
     for j in range(len(output)):
-        print(check(output[j]))
+        #print(check(output[j]))
         output[j] = check(output[j])
-    print(output)
-    output = div("/".join(output))
-
-print(output)
+    #print(output)
+    output = div(linejoin(output))
+#print(linejoin(output))
