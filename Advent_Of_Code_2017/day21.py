@@ -1,6 +1,6 @@
 from math import sqrt
 
-with open("day21test.txt", "r") as f:
+with open("day21data.txt", "r") as f:
     DATA = f.read().splitlines()
 
 for i in range(len(DATA)):
@@ -16,10 +16,14 @@ for l in DATA:
 start = ".#./..#/###"
 #start = "#..#/..../#..#/.##."
 
-def hFlip(inp):
+def transpose(inp):
     out = []
-    for s in inp.split("/"):
-        out.append(s[::-1])
+    inp = inp.split("/")
+    for i in range(len(inp)):
+        out.append("")
+    for i in range(len(inp)):
+        for j in range(len(inp)):
+            out[j] += inp[len(inp) - 1 - i][len(inp) - 1 - j]
     return "/".join(out)
 
 def vFlip(inp):
@@ -28,15 +32,17 @@ def vFlip(inp):
 def check(inp):
     global RULEDICT
     doH = True
-    while True:
+    count = 0
+    while count < 20:
         if inp in RULEDICT.keys():
             return RULEDICT[inp]
         elif doH:
-            inp = hFlip(inp)
+            inp = transpose(inp)
             doH = False
         else:
             inp = vFlip(inp)
             doH = True
+        count += 1
 
 
 def div(inp):
@@ -65,29 +71,30 @@ def div(inp):
 
 def linejoin(inp):
     out = []
-    size = sqrt(len(inp))
+    size = int(sqrt(len(inp)))
     if size > 1:
         for i in range(len(inp)):
             inp[i] = inp[i].split("/")
+        insize = len(inp[0])
         for i in range(size):
-            for j in range(size):
-                insize = len(inp[j + (i*2)])
-                for k in range(insize):
-                    
-
-    out = list(inp)
-    print(out)
+            lines = []
+            for k in range(insize):
+                lines.append("")
+            for j in range(insize):
+                for k in range(size):
+                    ind = k + (i*2)
+                    lines[j] = lines[j] + inp[ind][j]
+            out.append("/".join(lines))
+    else:
+        out = inp
+    #print(out)
     return "/".join(out)
 
 
 
 output = div(start)
-#print(output)
-#print(linejoin(output))
-for i in range(2):
-    for j in range(len(output)):
-        #print(check(output[j]))
-        output[j] = check(output[j])
-    #print(output)
+for i in range(5):
     output = div(linejoin(output))
-#print(linejoin(output))
+    for j in range(len(output)):
+        output[j] = check(output[j])
+print(linejoin(output).count("#"))
