@@ -1,5 +1,3 @@
-import queue
-
 def find_marker(data_in, size):
     buffer = list(data_in[0:size])
     buffer.reverse()
