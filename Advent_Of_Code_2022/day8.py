@@ -14,15 +14,19 @@ def is_seen(x, y, full_map, map_size_x, map_size_y):
     for i in range(0, x):
         if full_map[(i,y)] >= height:
             seen[0] = 0
+            break
     for i in range(map_size_x - 1, x, -1):
         if full_map[(i,y)] >= height:
             seen[1] = 0
+            break
     for i in range(0, y):
         if full_map[(x,i)] >= height:
             seen[2] = 0
+            break
     for i in range(map_size_y - 1, y, -1):
         if full_map[(x,i)] >= height:
             seen[3] = 0
+            break
     return max(seen)
 
 def get_scenic_score(x, y, full_map, map_size_x, map_size_y):
